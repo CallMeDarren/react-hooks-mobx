@@ -1,12 +1,11 @@
-import "./App.css";
-import { ClickTimes, From } from "./components/home";
+// import { ClickTimes, From, Index } from "./components/home";
+import Home from './components/home';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <ClickTimes />
-        <From/>
+        <Home />
       </header>
     </div>
   );

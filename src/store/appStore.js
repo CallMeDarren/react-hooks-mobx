@@ -1,8 +1,9 @@
 import { action, observable } from "mobx";
 
-export default class AppStore {
+class AppStore {
   @observable todoList = [];
   @action add() {
+    console.log('111', 111);
     this.todoList.push("新增一条");
   }
   @action minus() {
@@ -12,5 +13,5 @@ export default class AppStore {
     this.todoList = [];
   }
 }
+export const store = new AppStore();
 
-const appStore = new AppStore();

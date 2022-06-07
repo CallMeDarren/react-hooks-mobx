@@ -1,5 +1,5 @@
-const path = require('path')
-const { override, addDecoratorsLegacy } = require('customize-cra')
+const path = require('path');
+const { override, addDecoratorsLegacy } = require('customize-cra');
 
 function resolve(dir) {
     return path.join(__dirname, dir)
@@ -13,7 +13,6 @@ const customize = () => (config, env) => {
             'react-dom': 'ReactDOM'
         }
     }
-
     return config
 };
 module.exports = override(addDecoratorsLegacy(), customize());
