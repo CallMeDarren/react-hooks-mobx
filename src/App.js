@@ -1,5 +1,6 @@
 // import { ClickTimes, From, Index } from "./components/home";
 import Home from './components/home';
+import "./App.css";
 
 function App() {
   return (

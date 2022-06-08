@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import { store } from "./store/appStore";
+import store from "./store/appStore";
 import { Provider } from "mobx-react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

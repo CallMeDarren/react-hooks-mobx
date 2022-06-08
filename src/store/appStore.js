@@ -1,17 +1,28 @@
-import { action, observable } from "mobx";
+import { action, observable, makeObservable } from "mobx";
 
 class AppStore {
-  @observable todoList = [];
+  constructor() {
+    makeObservable(this);
+  }
+  @observable todoList = ["初始化一条"];
+  @observable count = 0;
+
   @action add() {
-    console.log('111', 111);
+    this.count += 1;
     this.todoList.push("新增一条");
+    console.log("todoList", this.todoList);
   }
+
   @action minus() {
+    if (this.count === 0) return;
     this.todoList.pop();
+    this.count -= 1;
   }
+
   @action clear() {
+    this.count = 0;
     this.todoList = [];
   }
 }
-export const store = new AppStore();
-
+const store = new AppStore();
+export default store;
