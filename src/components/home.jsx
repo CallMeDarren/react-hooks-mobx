@@ -1,18 +1,81 @@
-import React, { useEffect, useState, Component } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { inject, observer } from 'mobx-react';
+import { Button, Input, Radio, Space, Card, Modal } from 'antd';
+import './home.css';
 
 const Home = ({ store }) => {
+  const [value, setValue] = useState(1);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [text, setText] = useState('');
+  // const textRef = useRef()
+  let textTemp = '';
+  const inputRef = useRef();
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const radioChange = (e) => {
+    setValue(e.target.value);
+  };
+
+  const handleText = (e) => {
+    if (e.target.value.length) {
+      textTemp = e.target.value;
+    }
+  }
+
+  const handleOk = () => {
+    // Promise.resolve().then(()=>{
+    //   setText(textTemp);
+    //   store.add(textTemp);
+    // });
+    setIsModalVisible(false);
+    store.add(textTemp);
+    textTemp = '';
+    // this.refs.inputRef.input
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   return (
     <>
-      <h3>待办事项：{store.count}</h3>
-      <button onClick={() => store.add()}>新增一条</button>
-      <button onClick={() => store.minus()}>完成一条</button>
-      <button onClick={() => store.clear()}>清空所有</button>
-      {store.todoList.map((item, index) => {
-        return (
-          <h3 key={index}>{item}</h3>
-        )
-      })}
+      <Card
+        hoverable
+        style={{ width: 240, height: 300, overflow: 'auto' }}
+      >
+        <h3>待办事项：{store.count}</h3>
+        <Button size="small" onClick={showModal}>新增</Button>
+        <Button size="small" onClick={() => store.minus(value)}>完成</Button>
+        <Button size="small" onClick={() => store.clear()}>清空</Button>
+        {store.todoList.map((item, index) => {
+          return (
+            <Radio.Group onChange={radioChange} value={value} className="list">
+              <Space direction="vertical">
+                <Radio key={index} value={index}>{item}</Radio>
+              </Space>
+            </Radio.Group>
+          )
+        })}
+      </Card>
+      <Modal
+        title="新增代办事项" visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        width={200}
+        footer={[
+          <Button key="back" onClick={handleCancel}>
+            取消
+          </Button>,
+          <Button key="submit" type="primary" onClick={handleOk}>
+            确认
+          </Button>,
+        ]}
+      >
+        <Input placeholder="请输入待办事项" maxLength={20} onChange={handleText} defaultValue={text} ref={inputRef}/>
+      </Modal>
     </>
   )
 }
