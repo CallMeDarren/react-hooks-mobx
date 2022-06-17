@@ -7,8 +7,6 @@ const Home = ({ store }) => {
   const [value, setValue] = useState(1);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [text, setText] = useState('');
-  // const textRef = useRef()
-  let textTemp = '';
   const inputRef = useRef();
 
   const showModal = () => {
@@ -20,20 +18,14 @@ const Home = ({ store }) => {
   };
 
   const handleText = (e) => {
-    if (e.target.value.length) {
-      textTemp = e.target.value;
-    }
+    setText(e.target.value);
   }
 
   const handleOk = () => {
-    // Promise.resolve().then(()=>{
-    //   setText(textTemp);
-    //   store.add(textTemp);
-    // });
     setIsModalVisible(false);
-    store.add(textTemp);
-    textTemp = '';
-    // this.refs.inputRef.input
+    text.length && store.add(text);
+    // const refValue = inputRef.current.input.value;
+    setText('');
   };
 
   const handleCancel = () => {
@@ -74,7 +66,7 @@ const Home = ({ store }) => {
           </Button>,
         ]}
       >
-        <Input placeholder="请输入待办事项" maxLength={20} onChange={handleText} defaultValue={text} ref={inputRef}/>
+        <Input placeholder="请输入待办事项" maxLength={20} onChange={handleText} defaultValue={text} ref={inputRef} />
       </Modal>
     </>
   )
